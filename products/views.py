@@ -3,10 +3,12 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Product
 from .serializers import ProductSerializer
 from products.serializers import ProductSerializer
+from users.permissions import Can_create_products, Can_view_allProducts, Can_view_product
 
 # class ProductViewClass(APIView):
 #     def get(self, request):
@@ -27,6 +29,7 @@ from products.serializers import ProductSerializer
     
 
 # class ProductId(APIView):
+#    #permission_classes = [IsAuthenticated, Can_create_products, Can_view_allProducts, Can_view_product]
 #     def get(self,request, pk):
 #         product = Product.objects.filter(pk = pk).first()
 #         # faite la verification
@@ -38,3 +41,4 @@ from products.serializers import ProductSerializer
 class ProductViewClass(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
